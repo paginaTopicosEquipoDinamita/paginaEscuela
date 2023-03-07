@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 </head>
 
-
 <body>
 
     <!-- ********* Barra de menu de incio ********** -->
@@ -18,8 +17,7 @@
     <nav class="navbar bg-body-tertiary fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
-                <img src="images/solo logo.png"
-                    alt="Logo" width="32" height="30" class="d-inline-block align-text-top">
+                <img src="images/solo logo.png" alt="Logo" width="32" height="30" class="d-inline-block align-text-top">
                 Escuela Martin Lutero
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
@@ -35,13 +33,14 @@
                 <div class="offcanvas-body">
                     <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="index.html"><ion-icon size="large" name="home-outline"></ion-icon></a>
+                            <a class="nav-link active" aria-current="page" href="index.html"><ion-icon size="large"
+                                    name="home-outline"></ion-icon></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Sing in</a>
+                            <a class="nav-link" href="#">Sign in</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Sing up</a>
+                            <a class="nav-link" href="#">Sign up</a>
                         </li>
                     </ul>
                 </div>
@@ -51,26 +50,42 @@
 
     <!-- **************** carrucel ****************-->
 
-    <div id="carouselExampleFade" class="carousel slide carousel-fade">
+    <div id="carouselExampleIndicators" class="carousel slide">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                aria-label="Slide 3"></button>
+        </div>
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="images/bannerMenu1.jpg" class="d-block w-100" height="600" alt="banner1">
+                <img src="images/bannerMenu1.jpg" class="d-block w-100" alt="banner1">
             </div>
             <div class="carousel-item">
-                <img src="images/bannerMenu2.jpg" class="d-block w-100" height="600" alt="banner2">
+                <img src="images/bannerMenu2.jpg" class="d-block w-100" alt="banner2">
             </div>
             <div class="carousel-item">
-                <img src="images/bannerMenu3.jpg" class="d-block w-100" height="600" alt="banner3">
+                <img src="images/bannerMenu3.jpg" class="d-block w-100" alt="banner3">
             </div>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
         </button>
+    </div>
+
+    <!-- ********************** Logo principal ***********************-->
+
+    <div class="text-center">
+        <img src="images/logroPrincipal.png" class="rounded" alt="logoPrincipal">
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
