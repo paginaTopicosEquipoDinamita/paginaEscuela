@@ -30,7 +30,7 @@ input[type="text"], input[type="password"]{
 }
 .input-contenedor{
     margin-bottom: 15px;
-    border: 1px solid #aaa;
+    border: 3px solid #aaa;
 }
 .icon{
     min-width: 50px;
