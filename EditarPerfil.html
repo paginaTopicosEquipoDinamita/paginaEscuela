@@ -1,3 +1,34 @@
+<?php 
+    session_start();
+    if (empty($_SESSION["id"])) {
+        header("location:Login1.php");
+    }
+
+    include("basedata.php");
+
+    $mensaje = '';
+
+    if ( !empty($_POST["enviarEdit"]) ) {
+    if ( empty($_POST["celular"]) or empty($_POST["telefono"]) or empty($_POST["direccion"]) ) {
+            $mensaje = 'Debes llenar todos los campos';
+        } else {
+            $nombre = $_POST["nombre"];
+            $correo = $_POST["correo"];
+            $celular = $_POST["celular"];
+            $telefono = $_POST["telefono"];
+            $direccion = $_POST["direccion"];
+            $id = $_SESSION["id"];
+
+            $sql = $conn -> query(" update Usuarios set nombre = '$nombre', correo = '$correo', numCelular = '$celular', numTelefono = '$telefono', direccion = '$direccion' where id = '$id' ");
+        if ($sql == 1) {
+            $mensaje = 'Informacion actualiza exitosamente: Cierra e Inicia Sesion';
+        } else {
+            $mensaje = 'ERROR: La informacion no pudo ser actualizada';
+        }
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,11 +43,11 @@
 </head>
 
 <body>
-   
+    <!-- ******** barra del menu superior ********** -->
     <div>
         <nav class="navbar bg-body-tertiary fixed-top">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="index.php">
                     <img src="images/solo logo.png" alt="Logo" width="32" height="30"
                         class="d-inline-block align-text-top">
                     Escuela Martin Lutero
@@ -34,73 +65,82 @@
                     <div class="offcanvas-body">
                         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="index.html"><ion-icon size="large"
+                                <a class="nav-link active" aria-current="page" href="index.php"><ion-icon size="large"
                                         name="home-outline"></ion-icon></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="Login.html">Sign in</a>
+                                <a class="nav-link" href="PerfilUser.php">Perfil</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Sign up</a>
+                                <a class="nav-link" href="tarjetas.php">Comunicación</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="cerrarSesion.php">Cerrar Sesión</a>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
         </nav>
-    </div>
+    </div> <!-- ******* fin de la barra de menu superior ********* -->
     <br>
     <br>
 
     <br>
 
-    <center> <img src="images/username.png" width="300" height="200" class="rounded-circle" alt="..."></center>
+    <center> <img src="images/username.png" width="300" height="200" class="rounded-circle" alt="img Generic"></center>
+
+    <?php if (!empty($mensaje)): ?>
+        <p> <?= $mensaje?></p>
+    <?php endif; ?>
 
     <div>
 
         <form method="post" action="" enctype="multipart/form-data" class="d-flex flex-column text-center">
             <input type="file" class="custom-file-input" name="botonSubida">
-
         </form>
 
     </div>
 
     <div>
-        <form class="row g-3 needs-validation" novalidate>
+        <!-- ********** EDIT DE LA INFORMACION DEL USUARIO ***********-->
+        <form class="row g-3 needs-validation" action="EditarPerfil.php" method="post" novalidate>
+            <div hidden class="col-md-4">
+                <label for="validationCustom01" class="form-label">ID</label>
+                <input type="text" placeholder="ID Usuario" class="form-control" id="validationCustom01" name="id">
+            </div>
             <div class="col-md-4">
                 <label for="validationCustom01" class="form-label">Nombre</label>
-                <input type="text" placeholder="Nombre Completo" class="form-control" id="validationCustom01">
+                <input type="text" placeholder="Nombre Completo" class="form-control" id="validationCustom01" name="nombre">
             </div>
 
             <div class="col-md-4">
                 <label for="validationCustom02" class="form-label">Numero de Celular</label>
-                <input type="text" placeholder="222 342 4290" class="form-control" id="validationCustom02">
+                <input type="text" placeholder="232557945681" class="form-control" id="validationCustom02" name="celular">
             </div>
 
             <div class="col-md-4">
                 <label for="validationCustomUsername" class="form-label">Correo Electronico</label>
                 <div class="input-group has-validation">
                     <span class="input-group-text" id="inputGroupPrepend">@</span>
-                    <input type="text" placeholder="abc@gmail.com" class="form-control" id="validationCustomUsername"
-                        aria-describedby="inputGroupPrepend">
-
+                    <input type="text" value="<?= $_SESSION["correo"]; ?>" placeholder="abc@example.com" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" name="correo">
                 </div>
             </div>
 
             <div class="col-md-4">
                 <label for="validationCustom02" class="form-label">Numero de Telefono</label>
-                <input type="text" class="form-control" placeholder="225 342 2959" id="validationCustom01">
+                <input type="text" class="form-control" placeholder="2321475987" id="validationCustom01" name="telefono">
             </div>
 
             <div class="col-md-4">
                 <label for="validationCustom01" class="form-label">Dirección</label>
-                <input type="text" class="form-control" id="validationCustom01">
+                <input type="text" placeholder="Calle Nombre #, Ciudad, Estado" class="form-control" id="validationCustom01" name="direccion">
             </div>
 
             <center>
                 <div class="col-12">
-                    <button class="btn btn-primary" type="submit">Enviar</button>
-                    <button class="btn btn-primary" type="submit">Cancelar</button>
+                    <input type="submit" value="Enviar" class="button" name="enviarEdit">
+                    <input type="submit" value="Cancelar" class="button" name="cancelarEdit">
                 </div>
             </center>
         </form>

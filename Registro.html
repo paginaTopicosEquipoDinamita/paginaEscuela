@@ -1,3 +1,39 @@
+<?php 
+  include("basedata.php");
+
+  $mensaje = '';
+
+  if ( !empty($_POST["registro"]) ) {
+    if ( !empty($_POST["nombre"]) and !empty($_POST["correo"]) and !empty($_POST["clave"]) ) {
+      $nombre = $_POST["nombre"];
+      $correo = $_POST["correo"];
+      $clave = $_POST["clave"];
+
+      $sql = $conn -> query(" select count(*) as 'total' from Usuarios where correo = '$correo' ");
+      if ($sql -> fetch_object()->total > 0) {
+        $mensaje = 'El correo ya existe en la Base de Datos';
+      } else {
+        $registrar = $conn -> query("insert into Usuarios(nombre, correo, contrasenia) values ('$nombre','$correo','$clave') ");
+          if ($registrar == 1) {
+              $mensaje = 'Usuario registrado correctamente';
+            } else {
+              $mensaje = 'El usuario no se pude registrar';
+          }
+      }
+    } else {
+      $mensaje = 'Debes llenar todos los campos';
+    } ?>
+
+    <script>
+      setTimeout(() => {
+        window.history.replaceState(null, null, window.location.pathname);
+      }, 0);
+    </script>
+
+  <?php  }
+
+?>
+
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -9,28 +45,33 @@
 
   </head>
   <body>
-<form class="formulario">
+
+  <?php if (!empty($mensaje)): ?>
+    <p> <?= $mensaje?></p>
+  <?php endif; ?>
+
+<form class="formulario" action="Registro.php" method="post">
 <h1>Registrarte</h1>
 <div class="contenedor">
 
   <div class="input-contenedor">
     <ion-icon name="person"></ion-icon>
-    <input type="text" placeholder="Nombre Completo" bg-info>
+    <input type="text" name="nombre" placeholder="Nombre Completo" bg-info>
     
   </div>
   <div class="input-contenedor">
     <ion-icon name="mail"></ion-icon>
-        <input type="text" placeholder="Correo Electronico">
+        <input type="text" name="correo" placeholder="Correo Electronico">
     
   </div>
   <div class="input-contenedor">
     <ion-icon name="key"></ion-icon>
-    <input type="password" placeholder="Contraseña">
+    <input type="password" name="clave" placeholder="Contraseña">
     
   </div>
-  <input type="submit" value="Registrate" class="button">
+  <input type="submit" value="Registrate" class="button" name="registro">
   <p>Al hacer el registro aceptas los acuerdos y condiciones de la pagina.</p>
-  <p>¿Ya tienes Cuenta?<a class="link" href="Login1.php">Login</a></p>
+  <p>¿Ya tienes Cuenta? <a class="link" href="Login1.php">Login</a></p>
 </div>
 </from>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
